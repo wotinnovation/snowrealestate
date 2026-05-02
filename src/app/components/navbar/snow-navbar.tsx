@@ -64,7 +64,13 @@ export default function SnowNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
-  const textColor = isOverAbout ? "#fff" : "#000";
+  let textColor = "#000";
+  if (pathname === "/" && !scrolled) {
+    textColor = "#fff";
+  } else if (isOverAbout) {
+    textColor = "#fff";
+  }
+
 
   // Close mobile menu on route change
   useEffect(() => {

@@ -23,7 +23,7 @@ export default function Home() {
         className="image-cover hero-banner"
         style={{
           position: 'relative',
-          backgroundImage: `url('/image/banner/hero.jpg')`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/image/banner/hero.jpg')`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -36,17 +36,17 @@ export default function Home() {
       >
         {/* Centered hero text */}
         <div className="container text-center" style={{ zIndex: 1, marginBottom: '0' }}>
-          <h1 className="text-white mb-2" style={{ fontSize: 'clamp(32px, 6vw, 56px)', fontWeight: '800', textShadow: '0 4px 15px rgba(0,0,0,0.6)', lineHeight: 1.1, letterSpacing: '-1px' }}>
-            Discover Your <span style={{ color: '#caab4d' }}>Dream Home</span> In Dubai
+          <h1 className="text-white mb-2" style={{ fontSize: 'clamp(32px, 6vw, 56px)', fontWeight: '800', lineHeight: 1.1, letterSpacing: '-1px' }}>
+            Discover Your <span style={{ color: '#ffcd52' }}>Dream Home</span> In Dubai
           </h1>
-          <p className="text-white mb-3" style={{ fontSize: 'clamp(14px, 2.5vw, 18px)', fontWeight: '400', textShadow: '0 2px 8px rgba(0,0,0,0.5)', opacity: 0.9, maxWidth: '600px', margin: '0 auto 20px' }}>
+          <p className="text-white mb-3" style={{ fontSize: 'clamp(14px, 2.5vw, 18px)', fontWeight: '400', opacity: 0.9, maxWidth: '600px', margin: '0 auto 20px' }}>
             Exclusive real estate market with Luxury Properties & Prime Locations.
           </p>
           <div className="d-none d-md-flex justify-content-center flex-nowrap gap-2">
-            <Link href="/properties" className="btn btn-primary px-2 px-md-5 py-md-3 rounded-pill" style={{ fontWeight: 700, fontSize: '11px', padding: '2px 10px', letterSpacing: '0.3px', background: '#caab4d', border: 'none', whiteSpace: 'nowrap' }}>
+            <Link href="/properties" className="btn btn-primary px-2 px-md-5 py-md-3 rounded-pill" style={{ fontWeight: 700, fontSize: '15px', padding: '2px 10px', letterSpacing: '0.3px', background: '#caab4d', border: 'none', whiteSpace: 'nowrap' }}>
               Explore Properties
             </Link>
-            <Link href="/about-us" className="btn btn-outline-light px-2 px-md-5 py-md-3 rounded-pill" style={{ fontWeight: 700, fontSize: '11px', padding: '2px 10px', letterSpacing: '0.3px', backdropFilter: 'blur(10px)', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', whiteSpace: 'nowrap' }}>
+            <Link href="/about-us" className="btn btn-outline-light px-2 px-md-5 py-md-3 rounded-pill" style={{ fontWeight: 700, fontSize: '15px', padding: '2px 10px', letterSpacing: '0.3px', backdropFilter: 'blur(10px)', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', whiteSpace: 'nowrap' }}>
               About Snow
             </Link>
           </div>
