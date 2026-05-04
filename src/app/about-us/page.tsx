@@ -156,8 +156,240 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ============================================================
+          CHAIRWOMAN SECTION — NEW
+      ============================================================ */}
+      <section style={{ background: '#fff', padding: '100px 0', overflow: 'hidden' }}>
+        <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
+
+          {/* Section Header */}
+          <div className="row justify-content-center text-center mb-5">
+            <div className="col-lg-8">
+              <span style={{ color: '#caab4d', fontWeight: 700, textTransform: 'uppercase', fontSize: '13px', letterSpacing: '2px' }}>Leadership</span>
+              <h3 style={{ fontSize: '32px', fontWeight: 800, color: '#1a1a2e', marginTop: '15px' }}>
+                Meet Our <span style={{ color: '#caab4d' }}>Chairwoman</span>
+              </h3>
+              <div style={{ width: '60px', height: '4px', background: '#caab4d', margin: '20px auto 0' }}></div>
+            </div>
+          </div>
+
+          {/* Card */}
+          <div className="row justify-content-center">
+            <div className="col-lg-11">
+              <div style={{
+                background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)',
+                borderRadius: '28px',
+                overflow: 'hidden',
+                boxShadow: '0 30px 80px rgba(26,26,46,0.25)',
+                position: 'relative',
+              }}>
+
+                {/* Gold decorative accent lines */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, height: '4px',
+                  background: 'linear-gradient(90deg, transparent, #caab4d, #e8d08a, #caab4d, transparent)'
+                }} />
+                <div style={{
+                  position: 'absolute', bottom: 0, left: 0, right: 0, height: '4px',
+                  background: 'linear-gradient(90deg, transparent, #caab4d, #e8d08a, #caab4d, transparent)'
+                }} />
+
+                {/* Subtle geometric background pattern */}
+                <div style={{
+                  position: 'absolute', top: '-60px', right: '-60px',
+                  width: '320px', height: '320px',
+                  border: '60px solid rgba(202,171,77,0.06)',
+                  borderRadius: '50%', pointerEvents: 'none'
+                }} />
+                <div style={{
+                  position: 'absolute', bottom: '-80px', left: '30%',
+                  width: '200px', height: '200px',
+                  border: '40px solid rgba(202,171,77,0.04)',
+                  borderRadius: '50%', pointerEvents: 'none'
+                }} />
+
+                <div className="row align-items-stretch g-0">
+
+                  {/* Photo Column */}
+                  <div className="col-lg-4 d-flex align-items-center justify-content-center" style={{ padding: '60px 40px' }}>
+                    <div style={{ textAlign: 'center' }}>
+                      {/* Photo frame */}
+                      <div style={{
+                        position: 'relative',
+                        display: 'inline-block',
+                        marginBottom: '28px',
+                      }}>
+                        {/* Outer gold ring */}
+                        <div style={{
+                          position: 'absolute', inset: '-6px',
+                          borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #caab4d, #e8d08a, #caab4d)',
+                          padding: '3px',
+                        }} />
+                        <div style={{
+                          width: '180px', height: '180px',
+                          borderRadius: '50%',
+                          overflow: 'hidden',
+                          position: 'relative',
+                          border: '5px solid #1a1a2e',
+                          boxShadow: '0 15px 40px rgba(0,0,0,0.4)',
+                        }}>
+                          {/* 
+                            Replace the src below with the actual photo path once uploaded:
+                            src="/images/team/noura-alharmoodi.jpg"
+                          */}
+                          <img
+                            src="/images/team/noura-alharmoodi.jpg"
+                            alt="Noura Ahmed Abdalla Safar Alharmoodi – Chairwoman"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+                            onError={(e) => {
+                              // Fallback placeholder if image path not yet set
+                              (e.target as HTMLImageElement).style.display = 'none';
+                              (e.target as HTMLImageElement).parentElement!.style.background = 'rgba(202,171,77,0.15)';
+                              (e.target as HTMLImageElement).parentElement!.innerHTML = `
+                                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+                                  <i class="fa-solid fa-user" style="font-size:60px;color:rgba(202,171,77,0.5);"></i>
+                                </div>`;
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* RERA badge */}
+                      <div style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '8px',
+                        background: 'rgba(202,171,77,0.12)',
+                        border: '1px solid rgba(202,171,77,0.3)',
+                        borderRadius: '30px',
+                        padding: '6px 16px',
+                        marginBottom: '16px',
+                      }}>
+                        <i className="fa-solid fa-id-badge" style={{ color: '#caab4d', fontSize: '12px' }}></i>
+                        <span style={{ color: '#caab4d', fontSize: '12px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          RERA Certified Broker
+                        </span>
+                      </div>
+
+                      {/* Broker card info */}
+                      <div style={{
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        borderRadius: '12px',
+                        padding: '16px 20px',
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Broker Card No.</span>
+                          <span style={{ color: '#caab4d', fontSize: '13px', fontWeight: 700 }}>46291</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Licensed Since</span>
+                          <span style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>Aug 2020</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Issued by</span>
+                          <span style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>DLD / RERA</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="d-none d-lg-block" style={{
+                    width: '1px',
+                    background: 'linear-gradient(to bottom, transparent, rgba(202,171,77,0.3), transparent)',
+                    margin: '40px 0',
+                  }} />
+
+                  {/* Info Column */}
+                  <div className="col-lg-8" style={{ padding: '60px 50px 60px 45px' }}>
+
+                    {/* Name & Title */}
+                    <div style={{ marginBottom: '35px' }}>
+                      <p style={{ color: '#caab4d', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '12px' }}>
+                        Chairwoman &amp; Founder
+                      </p>
+                      <h4 style={{ color: '#fff', fontSize: '30px', fontWeight: 800, margin: 0, lineHeight: 1.2 }}>
+                        Noura Ahmed Abdalla Safar
+                      </h4>
+                      <h4 style={{ color: '#caab4d', fontSize: '30px', fontWeight: 800, margin: '4px 0 0', lineHeight: 1.2 }}>
+                        Alharmoodi
+                      </h4>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', marginTop: '8px', fontStyle: 'italic' }}>
+                        نوره احمد عبدالله صفر الهرمودى
+                      </p>
+                    </div>
+
+                    {/* Bio */}
+                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '15px', lineHeight: '1.85', marginBottom: '35px' }}>
+                      Under the visionary leadership of Noura Alharmoodi, Snow Real Estate Brokerage has grown into one of Dubai&apos;s most trusted property consultancies. A RERA-certified broker with over five years of licensed practice, Noura has built a firm anchored in integrity, market expertise, and a client-first philosophy — earning the confidence of investors across the UAE and internationally.
+                    </p>
+
+                    {/* Licensed Activities */}
+                    <div style={{ marginBottom: '35px' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '14px' }}>
+                        Licensed Activities
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                        {[
+                          'Real Estate Buying & Selling Brokerage',
+                          'Leasing Property Brokerage',
+                          'Real Estate Management Supervision',
+                          'Real Estate Mortgage Broker',
+                        ].map((act, i) => (
+                          <span key={i} style={{
+                            background: 'rgba(202,171,77,0.1)',
+                            border: '1px solid rgba(202,171,77,0.25)',
+                            color: 'rgba(255,255,255,0.8)',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            padding: '6px 14px',
+                            borderRadius: '20px',
+                          }}>
+                            {act}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Stats row */}
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(3, 1fr)',
+                      gap: '1px',
+                      background: 'rgba(202,171,77,0.15)',
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      border: '1px solid rgba(202,171,77,0.15)',
+                    }}>
+                      {[
+                        { value: '5+', label: 'Years Licensed' },
+                        { value: '4', label: 'Licensed Activities' },
+                        { value: 'DLD', label: 'Land Dept. Verified' },
+                      ].map((stat, i) => (
+                        <div key={i} style={{
+                          background: 'rgba(255,255,255,0.03)',
+                          padding: '22px 20px',
+                          textAlign: 'center',
+                        }}>
+                          <div style={{ color: '#caab4d', fontSize: '22px', fontWeight: 800, lineHeight: 1 }}>{stat.value}</div>
+                          <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '6px' }}>{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* ============================================================
+          END CHAIRWOMAN SECTION
+      ============================================================ */}
+
       {/* FAQ Section */}
-      <section style={{ background: '#fff', padding: '100px 0' }}>
+      <section style={{ background: '#f8f9fa', padding: '100px 0' }}>
         <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
           <div className="row g-5">
             <div className="col-lg-5">
@@ -216,8 +448,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
       {/* Global Presence Section */}
-      <section style={{ background: '#f8f9fa', padding: '100px 0' }}>
+      <section style={{ background: '#fff', padding: '100px 0' }}>
         <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
           <div className="row justify-content-center text-center mb-5">
             <div className="col-lg-8">
@@ -231,8 +464,8 @@ export default function AboutPage() {
           <div className="row g-4 justify-content-center">
             {[
               { country: "United Arab Emirates", city: "Dubai (Headquarters)", icon: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop" },
-              { country: "Saudi Arabia", city: "Riyadh & Jeddah", icon: "https://images.unsplash.com/photo-1586724230021-4540c1c4b45d?q=80&w=800&auto=format&fit=crop" },
-              { country: "Kuwait", city: "Kuwait City", icon: "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?q=80&w=800&auto=format&fit=crop" }
+              { country: "Saudi Arabia", city: "Riyadh & Jeddah", icon: "/image/PLACE/SAUDI.jpg" },
+              { country: "Kuwait", city: "Kuwait City", icon: "/image/PLACE/Kuwait.jpg" }
             ].map((loc, i) => (
               <div key={i} className="col-lg-4 col-md-6">
                 <div style={{ 

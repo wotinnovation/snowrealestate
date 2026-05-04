@@ -129,7 +129,7 @@ function Section({ title, children, defaultOpen = true }: { title: string; child
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div style={{ background: "#fff", borderRadius: "14px", boxShadow: "0 2px 20px rgba(0,0,0,0.06)", marginBottom: "20px", overflow: "hidden", border: "1px solid #f0f0f0" }}>
-      <button onClick={() => setOpen(!open)} style={{ width: "100%", padding: "18px 24px", background: "none", border: "none", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", borderBottom: open ? "1px solid #f5f5f5" : "none" }}>
+      <button className="section-header-btn" onClick={() => setOpen(!open)} style={{ width: "100%", padding: "18px 24px", background: "none", border: "none", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", borderBottom: open ? "1px solid #f5f5f5" : "none" }}>
         <h5 style={{ margin: 0, fontWeight: 700, fontSize: "16px", color: "#1a1a2e" }}>{title}</h5>
         <i className={`fa-solid fa-chevron-${open ? "up" : "down"}`} style={{ color: "#caab4d", fontSize: "13px" }} />
       </button>
@@ -140,7 +140,7 @@ function Section({ title, children, defaultOpen = true }: { title: string; child
 
 /* ─── Shared styles ─────────────────────────────────────── */
 const fieldLabel: React.CSSProperties = { display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "0.8px", textTransform: "uppercase", color: "#888", marginBottom: "6px" };
-const inputStyle: React.CSSProperties = { width: "100%", padding: "10px 14px", border: "1px solid #e5e5e5", borderRadius: "8px", fontSize: "14px", color: "#1a1a2e", outline: "none", background: "#fafafa", boxSizing: "border-box" };
+const inputStyle: React.CSSProperties = { width: "100%", padding: "12px 14px", border: "1px solid #e5e5e5", borderRadius: "8px", fontSize: "14px", color: "#1a1a2e", outline: "none", background: "#fafafa", boxSizing: "border-box" };
 
 /* ─── Main Page ─────────────────────────────────────────── */
 export default function PropertyDetailPage() {
@@ -238,7 +238,7 @@ export default function PropertyDetailPage() {
         {/* Thumbnails */}
         <div style={{ display: "flex", gap: "6px", padding: "8px 16px", overflowX: "auto", background: "#0a0e1e" }}>
           {allImages.map((img, i) => (
-            <div key={i} onClick={() => setActiveImg(i)} style={{ flexShrink: 0, width: "100px", height: "64px", borderRadius: "8px", overflow: "hidden", border: i === activeImg ? "2px solid #caab4d" : "2px solid transparent", cursor: "pointer", opacity: i === activeImg ? 1 : 0.65, transition: "all 0.2s" }}>
+            <div key={i} onClick={() => setActiveImg(i)} className="gallery-thumb" style={{ flexShrink: 0, width: "100px", height: "64px", borderRadius: "8px", overflow: "hidden", border: i === activeImg ? "2px solid #caab4d" : "2px solid transparent", cursor: "pointer", opacity: i === activeImg ? 1 : 0.65, transition: "all 0.2s" }}>
               <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           ))}
@@ -269,7 +269,7 @@ export default function PropertyDetailPage() {
                 </div>
 
                 {/* Key Stats */}
-                <div style={{ display: "flex", gap: "0", marginTop: "22px", borderTop: "1px solid #f5f5f5", paddingTop: "18px", flexWrap: "wrap" }}>
+                <div className="sp-stats-grid" style={{ display: "flex", gap: "0", marginTop: "22px", borderTop: "1px solid #f5f5f5", paddingTop: "18px", flexWrap: "wrap" }}>
                   {[
                     { icon: "fa-bed", label: "Bedrooms", val: p.beds },
                     { icon: "fa-bath", label: "Bathrooms", val: p.baths },
@@ -278,7 +278,7 @@ export default function PropertyDetailPage() {
                     { icon: "fa-couch", label: "Furnished", val: p.furnished.split(" ")[0] },
                     { icon: "fa-building", label: "Floor", val: p.floors },
                   ].map((s) => (
-                    <div key={s.label} style={{ flex: "1 1 16%", minWidth: "90px", textAlign: "center", padding: "10px 4px" }}>
+                    <div key={s.label} className="sp-stat-item" style={{ flex: "1 1 16%", minWidth: "90px", textAlign: "center", padding: "10px 4px" }}>
                       <i className={`fa-solid ${s.icon}`} style={{ color: "#caab4d", fontSize: "18px", display: "block", marginBottom: "6px" }} />
                       <div style={{ fontWeight: 700, fontSize: "15px", color: "#1a1a2e" }}>{s.val}</div>
                       <div style={{ fontSize: "11px", color: "#aaa", marginTop: "2px" }}>{s.label}</div>
@@ -305,7 +305,7 @@ export default function PropertyDetailPage() {
               </div>
 
               {/* Investment Quick Stats */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "12px", marginBottom: "20px" }}>
+              <div className="sp-quick-stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "12px", marginBottom: "20px" }}>
                 {[
                   { label: "Property ID", val: `SNOW-00${p.id}` },
                   { label: "Service Charge", val: p.serviceCharge },
@@ -334,9 +334,9 @@ export default function PropertyDetailPage() {
 
               {/* Features & Details */}
               <Section title="Property Details">
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0" }}>
+                <div className="sp-features-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0" }}>
                   {p.features.map((f, i) => (
-                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "11px 12px", background: i % 2 === 0 ? "#fafafa" : "#fff", borderBottom: "1px solid #f0f0f0", fontSize: "14px" }}>
+                    <div key={i} className="sp-feature-item" style={{ display: "flex", justifyContent: "space-between", padding: "11px 12px", background: i % 2 === 0 ? "#fafafa" : "#fff", borderBottom: "1px solid #f0f0f0", fontSize: "14px" }}>
                       <span style={{ color: "#888", fontWeight: 500 }}>{f.label}</span>
                       <span style={{ color: "#1a1a2e", fontWeight: 600 }}>{f.value}</span>
                     </div>
@@ -346,7 +346,7 @@ export default function PropertyDetailPage() {
 
               {/* Amenities */}
               <Section title="Amenities & Features">
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
+                <div className="sp-amenities-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
                   {p.amenities.map((a, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 14px", background: "#fafafa", borderRadius: "8px", border: "1px solid #f0f0f0" }}>
                       <i className="fa-solid fa-circle-check" style={{ color: "#caab4d", fontSize: "13px", flexShrink: 0 }} />
@@ -369,7 +369,7 @@ export default function PropertyDetailPage() {
 
               {/* Nearby */}
               <Section title="What's Nearby">
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
+                <div className="sp-nearby-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
                   {p.nearby.map((cat) => (
                     <div key={cat.category}>
                       <h6 style={{ fontWeight: 700, color: "#1a1a2e", marginBottom: "12px", fontSize: "14px" }}>

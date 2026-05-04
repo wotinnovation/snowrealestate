@@ -289,24 +289,130 @@ a {
 
 /* Mobile (Below 768px) */
 @media (max-width: 767px) {
-  .single-property-wrapper h1 { font-size: 18px !important; }
-  .single-property-wrapper h5 { font-size: 13px !important; }
-  .single-property-wrapper h6 { font-size: 12px !important; }
-  .single-property-wrapper p { font-size: 11px !important; line-height: 1.6 !important; }
-  .single-property-wrapper div[style*="fontSize: 26px"] { font-size: 18px !important; }
-  .single-property-wrapper div[style*="fontSize: 16px"] { font-size: 12px !important; }
-  .single-property-wrapper span[style*="fontSize: 14px"] { font-size: 10px !important; }
+  .single-property-wrapper h1 { font-size: 20px !important; line-height: 1.3 !important; }
+  .single-property-wrapper h3 { font-size: 17px !important; }
+  .single-property-wrapper h4 { font-size: 15px !important; }
+  .single-property-wrapper h5 { font-size: 14px !important; }
+  .single-property-wrapper h6 { font-size: 13px !important; }
+  .single-property-wrapper p { font-size: 12px !important; line-height: 1.6 !important; }
   
-  /* Fix Action Buttons and Icon scaling */
-  .single-property-wrapper button, 
-  .single-property-wrapper a {
+  /* Reduce excessive padding on mobile */
+  .single-property-wrapper .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  /* Select boxes with large padding by style attribute */
+  .single-property-wrapper div[style*="padding: 28px"],
+  .single-property-wrapper div[style*="padding: 24px"],
+  .single-property-wrapper div[style*="padding: 20px"],
+  .single-property-wrapper section[style*="paddingTop: 36px"] {
+    padding: 15px !important;
+  }
+
+  /* Price and Header */
+  .single-property-wrapper div[style*="fontSize: 26px"] { font-size: 20px !important; }
+  .single-property-wrapper .sp-price-col div { font-size: 20px !important; font-weight: 800 !important; }
+  
+  /* Action Buttons - Make them 2x2 grid for perfect alignment */
+  .single-property-wrapper div[style*="flexWrap: \"wrap\""][style*="gap: \"10px\""],
+  .single-property-wrapper div[style*="display: \"flex\""][style*="marginTop: \"20px\""] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .single-property-wrapper div[style*="flexWrap: \"wrap\""][style*="gap: \"10px\""] button,
+  .single-property-wrapper div[style*="flexWrap: \"wrap\""][style*="gap: \"10px\""] a {
+    width: 100% !important;
+    margin: 0 !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+    padding: 10px 5px !important;
+  }
+  
+  /* Data Values scaling */
+  .single-property-wrapper div[style*="fontSize: 15px"],
+  .single-property-wrapper .data-value-large { font-size: 13px !important; }
+  
+  .single-property-wrapper div[style*="fontSize: 13px"],
+  .single-property-wrapper span[style*="fontSize: 13px"],
+  .single-property-wrapper .data-value-medium { font-size: 11px !important; }
+  
+  .single-property-wrapper div[style*="fontSize: 11px"],
+  .single-property-wrapper .data-label { font-size: 9px !important; }
+
+  /* Key Stats alignment (Beds, Baths, etc) */
+  .sp-stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0 !important;
+    padding: 15px 0 !important;
+    border-top: 1px solid #f0f0f0 !important;
+  }
+  .sp-stat-item {
+    min-width: unset !important;
+    flex: unset !important;
+    padding: 10px 2px !important;
+    border-right: 1px solid #f5f5f5 !important;
+  }
+  .sp-stat-item:nth-child(3n) { border-right: none !important; }
+  .sp-stat-item:nth-child(n+4) { border-top: 1px solid #f5f5f5 !important; }
+  .sp-stat-item i { font-size: 16px !important; margin-bottom: 4px !important; }
+  
+  /* Investment Quick Stats Grid */
+  .sp-quick-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .sp-quick-stats-grid div {
+    padding: 12px 8px !important;
+  }
+  
+  /* Amenities Grid */
+  .sp-amenities-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .sp-amenities-grid div {
+    padding: 8px 10px !important;
+  }
+
+  /* Nearby Grid */
+  .sp-nearby-grid {
+    grid-template-columns: 1fr !important;
+    gap: 25px !important;
+  }
+
+  /* Standard Components Scaling */
+  .deatil_features, 
+  .avl-features {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 !important;
+  }
+  .deatil_features li,
+  .avl-features li {
     font-size: 11px !important;
-    padding: 8px 12px !important;
+    width: 100% !important;
+    padding: 6px 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
-  .single-property-wrapper .fa-solid {
-    font-size: 14px !important;
+  .deatil_features li strong {
+    font-size: 10px !important;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 2px;
   }
-  
+
+  .nearby-wrap h5 { font-size: 13px !important; font-weight: 700 !important; }
+  .nearby-wrap h4 { font-size: 12px !important; }
+  .neary_section_list small { font-size: 10px !important; }
+
   /* Alignment Fixes */
   .sp-header-row {
     flex-direction: column !important;
@@ -315,7 +421,56 @@ a {
   .sp-price-col {
     text-align: left !important;
     width: 100%;
-    margin-top: 5px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f5f5f5;
+  }
+
+  /* Property Details Grid (label/value pairs) */
+  .single-property-wrapper div[style*="gridTemplateColumns: \"1fr 1fr\""],
+  .single-property-wrapper div[style*="gridTemplateColumns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Hero photo count */
+  div[style*="bottom: \"20px\""][style*="right: \"20px\""] {
+    bottom: 10px !important;
+    right: 10px !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .section-header-btn {
+    padding: 12px 15px !important;
+  }
+
+  .gallery-thumb {
+    width: 80px !important;
+    height: 50px !important;
+  }
+
+  /* Property Features List */
+  .sp-features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  .sp-feature-item {
+    font-size: 11px !important;
+    padding: 12px 0 !important;
+    background: transparent !important;
+    border-bottom: 1px solid #f5f5f5 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  .sp-feature-item span:first-child {
+    color: #999 !important;
+    font-weight: 600 !important;
+  }
+  .sp-feature-item span:last-child {
+    color: #1a1a2e !important;
+    font-weight: 700 !important;
+    text-align: right !important;
   }
 }
 
