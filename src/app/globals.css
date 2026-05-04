@@ -449,6 +449,46 @@ a {
     height: 50px !important;
   }
 
+  /* About Us Page & Global Alignment */
+  .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  section {
+    padding: 60px 0 !important;
+  }
+
+  .about-card {
+    border-radius: 18px !important;
+    margin: 0 !important;
+  }
+
+  .about-photo-col {
+    padding: 40px 20px !important;
+  }
+
+  .about-info-col {
+    padding: 30px 20px !important;
+  }
+
+  .about-info-col h4 {
+    font-size: 22px !important;
+  }
+
+  /* Stats grid inside about card */
+  .about-info-col div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    background: none !important;
+    border: none !important;
+  }
+  .about-info-col div[style*="gridTemplateColumns: 'repeat(3, 1fr)'"] > div {
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+  }
+
   /* Property Features List */
   .sp-features-grid {
     grid-template-columns: 1fr !important;

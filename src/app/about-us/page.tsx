@@ -55,7 +55,7 @@ export default function AboutPage() {
 
       {/* Elaborated Content Section */}
       <section style={{ background: '#fff', padding: '100px 0' }}>
-        <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
+        <div className="container">
           <div className="row align-items-center g-5">
             <div className="col-lg-6">
                 <div style={{ position: 'relative' }}>
@@ -160,7 +160,7 @@ export default function AboutPage() {
           CHAIRWOMAN SECTION — NEW
       ============================================================ */}
       <section style={{ background: '#fff', padding: '100px 0', overflow: 'hidden' }}>
-        <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
+        <div className="container">
 
           {/* Section Header */}
           <div className="row justify-content-center text-center mb-5">
@@ -175,8 +175,8 @@ export default function AboutPage() {
 
           {/* Card */}
           <div className="row justify-content-center">
-            <div className="col-lg-11">
-              <div style={{
+            <div className="col-lg-12">
+              <div className="about-card" style={{
                 background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)',
                 borderRadius: '28px',
                 overflow: 'hidden',
@@ -210,113 +210,60 @@ export default function AboutPage() {
 
                 <div className="row align-items-stretch g-0">
 
-                  {/* Photo Column */}
-                  <div className="col-lg-4 d-flex align-items-center justify-content-center" style={{ padding: '60px 40px' }}>
-                    <div style={{ textAlign: 'center' }}>
-                      {/* Photo frame */}
-                      <div style={{
-                        position: 'relative',
-                        display: 'inline-block',
-                        marginBottom: '28px',
-                      }}>
-                        {/* Outer gold ring */}
-                        <div style={{
-                          position: 'absolute', inset: '-6px',
-                          borderRadius: '50%',
-                          background: 'linear-gradient(135deg, #caab4d, #e8d08a, #caab4d)',
-                          padding: '3px',
-                        }} />
-                        <div style={{
-                          width: '180px', height: '180px',
-                          borderRadius: '50%',
-                          overflow: 'hidden',
-                          position: 'relative',
-                          border: '5px solid #1a1a2e',
-                          boxShadow: '0 15px 40px rgba(0,0,0,0.4)',
-                        }}>
-                          {/* 
-                            Replace the src below with the actual photo path once uploaded:
-                            src="/images/team/noura-alharmoodi.jpg"
-                          */}
-                          <img
-                            src="/images/team/noura-alharmoodi.jpg"
-                            alt="Noura Ahmed Abdalla Safar Alharmoodi – Chairwoman"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
-                            onError={(e) => {
-                              // Fallback placeholder if image path not yet set
-                              (e.target as HTMLImageElement).style.display = 'none';
-                              (e.target as HTMLImageElement).parentElement!.style.background = 'rgba(202,171,77,0.15)';
-                              (e.target as HTMLImageElement).parentElement!.innerHTML = `
-                                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-                                  <i class="fa-solid fa-user" style="font-size:60px;color:rgba(202,171,77,0.5);"></i>
-                                </div>`;
-                            }}
-                          />
-                        </div>
-                      </div>
-
-                      {/* RERA badge */}
-                      <div style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '8px',
-                        background: 'rgba(202,171,77,0.12)',
-                        border: '1px solid rgba(202,171,77,0.3)',
-                        borderRadius: '30px',
-                        padding: '6px 16px',
-                        marginBottom: '16px',
-                      }}>
-                        <i className="fa-solid fa-id-badge" style={{ color: '#caab4d', fontSize: '12px' }}></i>
-                        <span style={{ color: '#caab4d', fontSize: '12px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>
-                          RERA Certified Broker
-                        </span>
-                      </div>
-
-                      {/* Broker card info */}
-                      <div style={{
-                        background: 'rgba(255,255,255,0.04)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px',
-                        padding: '16px 20px',
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Broker Card No.</span>
-                          <span style={{ color: '#caab4d', fontSize: '13px', fontWeight: 700 }}>46291</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Licensed Since</span>
-                          <span style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>Aug 2020</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Issued by</span>
-                          <span style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>DLD / RERA</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="d-none d-lg-block" style={{
-                    width: '1px',
-                    background: 'linear-gradient(to bottom, transparent, rgba(202,171,77,0.3), transparent)',
-                    margin: '40px 0',
-                  }} />
+                  {/* Image section removed as requested */}
 
                   {/* Info Column */}
-                  <div className="col-lg-8" style={{ padding: '60px 50px 60px 45px' }}>
+                  <div className="col-lg-12 about-info-col" style={{ padding: '80px 10%', position: 'relative', textAlign: 'center' }}>
+                    
+                    {/* Vertical Divider - Absolute to prevent flex wrapping */}
+                    <div className="d-none d-lg-block" style={{
+                      position: 'absolute',
+                      left: 0,
+                      top: '15%',
+                      bottom: '15%',
+                      width: '1px',
+                      background: 'linear-gradient(to bottom, transparent, rgba(202,171,77,0.3), transparent)',
+                    }} />
 
                     {/* Name & Title */}
                     <div style={{ marginBottom: '35px' }}>
                       <p style={{ color: '#caab4d', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '12px' }}>
                         Chairwoman &amp; Founder
                       </p>
-                      <h4 style={{ color: '#fff', fontSize: '30px', fontWeight: 800, margin: 0, lineHeight: 1.2 }}>
-                        Noura Ahmed Abdalla Safar
+                      <h4 style={{ color: '#fff', fontSize: '36px', fontWeight: 800, margin: 0, lineHeight: 1.2 }}>
+                        Noura Ahmed Abdalla Safar Alharmoodi
                       </h4>
-                      <h4 style={{ color: '#caab4d', fontSize: '30px', fontWeight: 800, margin: '4px 0 0', lineHeight: 1.2 }}>
-                        Alharmoodi
-                      </h4>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', marginTop: '8px', fontStyle: 'italic' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', marginTop: '12px', fontStyle: 'italic' }}>
                         نوره احمد عبدالله صفر الهرمودى
                       </p>
+
+                      {/* Broker Certificate Button */}
+                      <div style={{ marginTop: '25px' }}>
+                        <a 
+                          href="/image/broker/ggm.pdf" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '10px',
+                            background: 'linear-gradient(135deg, #caab4d 0%, #a88a3d 100%)',
+                            color: '#1a1a2e',
+                            padding: '12px 24px',
+                            borderRadius: '30px',
+                            textDecoration: 'none',
+                            fontWeight: 700,
+                            fontSize: '13px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            boxShadow: '0 10px 20px rgba(202,171,77,0.2)',
+                            transition: 'all 0.3s'
+                          }}
+                        >
+                          <i className="fa-solid fa-file-pdf" style={{ fontSize: '16px' }}></i>
+                          View Broker Certificate
+                        </a>
+                      </div>
                     </div>
 
                     {/* Bio */}
@@ -326,10 +273,10 @@ export default function AboutPage() {
 
                     {/* Licensed Activities */}
                     <div style={{ marginBottom: '35px' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '14px' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '18px' }}>
                         Licensed Activities
                       </p>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
                         {[
                           'Real Estate Buying & Selling Brokerage',
                           'Leasing Property Brokerage',
@@ -360,6 +307,8 @@ export default function AboutPage() {
                       borderRadius: '16px',
                       overflow: 'hidden',
                       border: '1px solid rgba(202,171,77,0.15)',
+                      maxWidth: '600px',
+                      margin: '0 auto'
                     }}>
                       {[
                         { value: '5+', label: 'Years Licensed' },
@@ -390,7 +339,7 @@ export default function AboutPage() {
 
       {/* FAQ Section */}
       <section style={{ background: '#f8f9fa', padding: '100px 0' }}>
-        <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
+        <div className="container">
           <div className="row g-5">
             <div className="col-lg-5">
               <span style={{ color: '#caab4d', fontWeight: 700, textTransform: 'uppercase', fontSize: '13px', letterSpacing: '2px' }}>Your Questions Answered</span>
@@ -451,7 +400,7 @@ export default function AboutPage() {
 
       {/* Global Presence Section */}
       <section style={{ background: '#fff', padding: '100px 0' }}>
-        <div className="container" style={{ maxWidth: '85%', margin: '0 auto' }}>
+        <div className="container">
           <div className="row justify-content-center text-center mb-5">
             <div className="col-lg-8">
               <span style={{ color: '#caab4d', fontWeight: 700, textTransform: 'uppercase', fontSize: '13px', letterSpacing: '2px' }}>Across Borders</span>
