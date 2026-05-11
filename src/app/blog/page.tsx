@@ -1,6 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getPageBySlug } from '../lib/api';
+
+export async function generateMetadata() {
+  const pageData = await getPageBySlug('blog');
+  return {
+    title: pageData?.metaTitle || 'Real Estate Blog & Insights | Snow Real Estate',
+    description: pageData?.metaDescription || 'Stay updated with the latest trends, investment guides, and market insights in Dubai real estate.',
+  };
+}
 
 import Navbar from '../components/navbar/navbar'
 import FooterTop from '../components/footer-top'

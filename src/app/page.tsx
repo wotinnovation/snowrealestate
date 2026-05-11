@@ -1,4 +1,13 @@
 import Link from "next/link";
+import { getPageBySlug } from "./lib/api";
+
+export async function generateMetadata() {
+  const pageData = await getPageBySlug('home');
+  return {
+    title: pageData?.metaTitle || 'Snow Real Estate | Luxury Properties in Dubai',
+    description: pageData?.metaDescription || "Exclusive real estate market with Luxury Properties & Prime Locations in Dubai.",
+  };
+}
 
 import SnowNavbar from "./components/navbar/snow-navbar";
 import HeroForm from "./components/form/hero-form";

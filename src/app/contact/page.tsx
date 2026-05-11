@@ -5,11 +5,15 @@ import FooterTop from '../components/footer-top';
 import Footer from '../components/footer';
 import ScrollToTop from '../components/scroll-to-top';
 import ContactSnow from '../components/contact-snow';
+import { getPageBySlug } from '../lib/api';
 
-export const metadata = {
-  title: 'Contact Us | Snow Real Estate',
-  description: "Get in touch with Snow Real Estate. We're here to help you invest, buy, or manage your luxury property in Dubai.",
-};
+export async function generateMetadata() {
+  const pageData = await getPageBySlug('contact');
+  return {
+    title: pageData?.metaTitle || 'Contact Us | Snow Real Estate',
+    description: pageData?.metaDescription || "Get in touch with Snow Real Estate. We're here to help you invest, buy, or manage your luxury property in Dubai.",
+  };
+}
 
 export default function ContactPage() {
   return (

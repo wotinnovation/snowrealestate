@@ -238,3 +238,32 @@ export async function getSettings(): Promise<ApiSettings | null> {
   `);
   return data.settings;
 }
+
+export interface ApiPage {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  image: string;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: string;
+}
+
+export async function getPageBySlug(slug: string): Promise<ApiPage | null> {
+  const data = await gqlFetch<{ page: ApiPage | null }>(`
+    query PageBySlug($slug: String) {
+      page(slug: $slug) {
+        id
+        title
+        slug
+        content
+        image
+        metaTitle
+        metaDescription
+        metaKeywords
+      }
+    }
+  `, { slug });
+  return data.page;
+}

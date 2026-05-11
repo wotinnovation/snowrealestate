@@ -5,10 +5,15 @@ import Footer from '../components/footer'
 import ScrollToTop from '../components/scroll-to-top'
 import PropertiesClient from '../components/properties/properties-client'
 
-export const metadata = {
-  title: 'Luxury Properties for Sale & Rent in Dubai | Snow Real Estate',
-  description: 'Explore our exclusive collection of luxury apartments, villas, and penthouses in Dubai. Find your next premium investment with Snow Real Estate.',
-};
+import { getPageBySlug } from '../lib/api';
+
+export async function generateMetadata() {
+  const pageData = await getPageBySlug('properties');
+  return {
+    title: pageData?.metaTitle || 'Luxury Properties for Sale & Rent in Dubai | Snow Real Estate',
+    description: pageData?.metaDescription || 'Explore our exclusive collection of luxury apartments, villas, and penthouses in Dubai. Find your next premium investment with Snow Real Estate.',
+  };
+}
 
 export default function PropertiesPage() {
   return (
