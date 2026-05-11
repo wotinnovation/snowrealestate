@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getFilterOptions } from "../../lib/api";
 
 /* ─── Shared styles ─────────────────────────────────────── */
 const labelStyle: React.CSSProperties = {
@@ -114,7 +115,23 @@ export default function HeroForm() {
   const [bedrooms, setBedrooms] = useState("");
   const [budget, setBudget] = useState("");
 
+  const [availableTypes, setAvailableTypes] = useState<string[]>([]);
+  const [availableCommunities, setAvailableCommunities] = useState<string[]>([]);
+
   const tabs = ["All Status", "For Rent", "For Sale"];
+
+  useEffect(() => {
+    async function fetchOptions() {
+      try {
+        const options = await getFilterOptions();
+        setAvailableTypes(options.propertyTypes);
+        setAvailableCommunities(options.communities);
+      } catch (err) {
+        console.error("Error fetching filter options:", err);
+      }
+    }
+    fetchOptions();
+  }, []);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -183,15 +200,15 @@ export default function HeroForm() {
             label="LOOKING FOR"
             value={lookingFor}
             placeholder="Property Type"
-            options={["Apartment", "Villa", "Penthouse", "Studio", "Office", "Townhouse"]}
+            options={availableTypes}
             onChange={setLookingFor}
           />
 
           <Dropdown 
-            label="LOCATION"
+            label="COMMUNITIES"
             value={location}
-            placeholder="All Cities"
-            options={["Downtown Dubai", "Dubai Marina", "Palm Jumeirah", "Business Bay", "Jumeirah Beach Residence", "Arabian Ranches", "DIFC", "Dubai Creek Harbour", "Emirates Hills", "JVC", "Dubai Hills Estate"]}
+            placeholder="All Communities"
+            options={availableCommunities}
             onChange={setLocation}
           />
 

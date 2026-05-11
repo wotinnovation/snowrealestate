@@ -38,8 +38,44 @@ const hours = [
   { day: "Saturday", time: "By Appointment" },
   { day: "Sunday", time: "Closed" },
 ];
-
 export default function ContactSnow() {
+  const [form, setForm] = React.useState({
+    name: "",
+    phone: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [loading, setLoading] = React.useState(false);
+  const [status, setStatus] = React.useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const api_url = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3201/gql").replace("/gql", "/api/contact/submit");
+      const res = await fetch(api_url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ type: "success", text: "Thank you! Your message has been sent successfully." });
+        setForm({ name: "", phone: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus({ type: "error", text: data.error || "Failed to send message. Please try again." });
+      }
+    } catch (err) {
+      setStatus({ type: "error", text: "A network error occurred. Please try again later." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section
       id="contact-us"
@@ -201,60 +237,73 @@ export default function ContactSnow() {
                 Fill out the form below and one of our specialists will get back to you within 24 hours.
               </p>
 
-              <form onSubmit={(e) => e.preventDefault()}>
+              {status && (
+                <div className={`alert ${status.type === "success" ? "alert-success" : "alert-danger"} mb-4`} role="alert">
+                  {status.text}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label style={labelStyle}>Full Name</label>
-                    <input type="text" placeholder="Your full name" style={inputStyle} />
+                    <input required type="text" placeholder="Your full name" style={inputStyle}
+                      value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                   </div>
                   <div className="col-md-6">
                     <label style={labelStyle}>Phone Number</label>
-                    <input type="tel" placeholder="+971 XX XXX XXXX" style={inputStyle} />
+                    <input required type="tel" placeholder="+971 XX XXX XXXX" style={inputStyle}
+                      value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
                   </div>
                   <div className="col-md-6">
                     <label style={labelStyle}>Email Address</label>
-                    <input type="email" placeholder="your@email.com" style={inputStyle} />
+                    <input required type="email" placeholder="your@email.com" style={inputStyle}
+                      value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                   </div>
                   <div className="col-md-6">
                     <label style={labelStyle}>Inquiry Type</label>
-                    <select style={{ ...inputStyle, appearance: "none", cursor: "pointer" }}>
+                    <select required style={{ ...inputStyle, appearance: "none", cursor: "pointer" }}
+                      value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })}>
                       <option value="">Select type</option>
-                      <option>Buy a Property</option>
-                      <option>Rent a Property</option>
-                      <option>Investment Consultation</option>
-                      <option>Off-Plan Projects</option>
-                      <option>Property Management</option>
+                      <option value="Buy a Property">Buy a Property</option>
+                      <option value="Rent a Property">Rent a Property</option>
+                      <option value="Investment Consultation">Investment Consultation</option>
+                      <option value="Off-Plan Projects">Off-Plan Projects</option>
+                      <option value="Property Management">Property Management</option>
                     </select>
                   </div>
                   <div className="col-12">
                     <label style={labelStyle}>Message</label>
                     <textarea
+                      required
                       placeholder="Tell us about your requirements..."
                       rows={4}
                       style={{ ...inputStyle, height: "auto", resize: "none" }}
+                      value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
                     />
                   </div>
                   <div className="col-12">
                     <button
                       type="submit"
+                      disabled={loading}
                       style={{
                         width: "100%",
                         padding: "15px",
-                        background: "linear-gradient(135deg, #caab4d, #caab4d)",
+                        background: loading ? "#ccc" : "linear-gradient(135deg, #caab4d, #caab4d)",
                         color: "#fff",
                         border: "none",
                         borderRadius: "10px",
                         fontSize: "15px",
                         fontWeight: 700,
-                        cursor: "pointer",
+                        cursor: loading ? "not-allowed" : "pointer",
                         letterSpacing: "0.4px",
                         transition: "opacity 0.2s",
                       }}
-                      onMouseEnter={(e) => ((e.target as HTMLElement).style.opacity = "0.88")}
-                      onMouseLeave={(e) => ((e.target as HTMLElement).style.opacity = "1")}
+                      onMouseEnter={(e) => !loading && ((e.target as HTMLElement).style.opacity = "0.88")}
+                      onMouseLeave={(e) => !loading && ((e.target as HTMLElement).style.opacity = "1")}
                     >
-                      Send Inquiry
-                      <i className="fa-solid fa-paper-plane ms-2"></i>
+                      {loading ? "Sending..." : "Send Inquiry"}
+                      {!loading && <i className="fa-solid fa-paper-plane ms-2"></i>}
                     </button>
                   </div>
                 </div>

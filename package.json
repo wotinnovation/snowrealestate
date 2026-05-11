@@ -1,12 +1,12 @@
 {
-  "name": "resido",
-  "version": "1.0.0",
-  "description": "Resido - Next Js Real Estate Template",
+  "name": "snowrealestate",
+  "version": "2.4.7",
+  "description": "Snowrealestate - Next Js Real Estate Template",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev  -p 3200 --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start  -p 3200",
     "lint": "next lint"
   },
   "dependencies": {

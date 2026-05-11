@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { snowProperties, SnowProperty } from "../../data/snow-properties";
+import { ApiProperty, getProperties, getFilterOptions } from "../../lib/api";
 import GridProperty from "../property/grid-property";
 
 // Normalise URL param → canonical tab label (case-insensitive)
@@ -25,8 +25,15 @@ export default function PropertiesClient() {
   const [bedrooms, setBedrooms] = useState(searchParams.get("bedrooms") || "");
   const [budget, setBudget] = useState(searchParams.get("budget") || "");
   const [sortKey, setSortKey] = useState<SortKey>("default");
-  const [results, setResults] = useState<SnowProperty[]>(snowProperties);
+  const [results, setResults] = useState<ApiProperty[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const [availableTypes, setAvailableTypes] = useState<string[]>([]);
+  const [availableCommunities, setAvailableCommunities] = useState<string[]>([]);
 
   // Sync state with URL whenever searchParams change (hero form navigation)
   useEffect(() => {
@@ -35,6 +42,7 @@ export default function PropertiesClient() {
     setLocation(searchParams.get("location") || "");
     setBedrooms(searchParams.get("bedrooms") || "");
     setBudget(searchParams.get("budget") || "");
+    setCurrentPage(1); // Reset to first page on filter change
   }, [searchParams]);
 
   // Prevent body scroll when mobile filter is open
@@ -52,47 +60,68 @@ export default function PropertiesClient() {
 
   const tabs = ["All Status", "For Rent", "For Sale"];
 
-  // ── Filtering logic ──
+  // ── Fetch filter options ──
   useEffect(() => {
-    let filtered = [...snowProperties];
+    async function fetchOptions() {
+      try {
+        const options = await getFilterOptions();
+        setAvailableTypes(options.propertyTypes);
+        setAvailableCommunities(options.communities);
+      } catch (err) {
+        console.error("Error fetching filter options:", err);
+      }
+    }
+    fetchOptions();
+  }, []);
 
-    if (activeTab !== "All Status") {
-      filtered = filtered.filter(
-        (p) => p.status.trim().toLowerCase() === activeTab.trim().toLowerCase()
-      );
-    }
-    if (lookingFor) {
-      filtered = filtered.filter((p) => p.type === lookingFor);
-    }
-    if (location) {
-      filtered = filtered.filter(
-        (p) =>
-          p.location.toLowerCase() === location.toLowerCase() ||
-          p.city.toLowerCase() === location.toLowerCase()
-      );
-    }
-    if (bedrooms) {
-      filtered = filtered.filter(
-        (p) => p.bedrooms.includes(bedrooms) || (bedrooms === "4+ Bedrooms" && p.beds >= 4)
-      );
-    }
-    if (budget) {
-      const max =
-        budget === "AED 500,000" ? 500_000 :
-          budget === "AED 1,000,000" ? 1_000_000 :
-            budget === "AED 2,000,000" ? 2_000_000 :
-              budget === "AED 5,000,000" ? 5_000_000 : Infinity;
-      filtered = filtered.filter((p) => p.price <= max);
-    }
+  // ── Fetch properties ──
+  const fetchProperties = useCallback(async () => {
+    setLoading(true);
+    try {
+      const propertyStatusArg = activeTab === "All Status" ? "" : activeTab;
 
-    // ── Sort ──
-    if (sortKey === "price-desc") filtered.sort((a, b) => b.price - a.price);
-    else if (sortKey === "price-asc") filtered.sort((a, b) => a.price - b.price);
-    else if (sortKey === "newest") filtered.sort((a, b) => Number(b.yearBuilt) - Number(a.yearBuilt));
-    else if (sortKey === "oldest") filtered.sort((a, b) => Number(a.yearBuilt) - Number(b.yearBuilt));
+      let bedroomCount: number | undefined = undefined;
+      if (bedrooms === "Studio") bedroomCount = 0;
+      else if (bedrooms === "1 Bedroom") bedroomCount = 1;
+      else if (bedrooms === "2 Bedrooms") bedroomCount = 2;
+      else if (bedrooms === "3 Bedrooms") bedroomCount = 3;
+      else if (bedrooms === "4+ Bedrooms") bedroomCount = 4;
 
-    setResults(filtered);
-  }, [activeTab, lookingFor, location, bedrooms, budget, sortKey]);
+      let maxPrice: number | undefined = undefined;
+      if (budget) {
+        maxPrice =
+          budget === "AED 500,000" ? 500_000 :
+            budget === "AED 1,000,000" ? 1_000_000 :
+              budget === "AED 2,000,000" ? 2_000_000 :
+                budget === "AED 5,000,000" ? 5_000_000 :
+                  budget === "AED 10,000,000+" ? 10_000_000 : undefined;
+      }
+
+      const data = await getProperties({
+        page: currentPage,
+        limit: 9,
+        propertyType: lookingFor,
+        propertyStatus: propertyStatusArg,
+        location: location,
+        bedrooms: bedroomCount,
+        maxPrice: maxPrice,
+        sort: sortKey === 'default' ? undefined : sortKey.replace('-', '_')
+      });
+
+      setResults(data.items);
+      setTotalPages(data.totalPages);
+      setTotalCount(data.totalCount);
+    } catch (err) {
+      console.error("Error fetching properties:", err);
+    } finally {
+      setLoading(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [activeTab, lookingFor, location, bedrooms, budget, sortKey, currentPage]);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
 
   // ── Compute active chip list for display ──
   const activeFilters: { label: string; clear: () => void }[] = [];
@@ -213,22 +242,22 @@ export default function PropertiesClient() {
                   style={{ ...selectStyle, borderColor: lookingFor ? "#caab4d" : "#e5e5e5", boxShadow: lookingFor ? "0 0 0 3px rgba(202,171,77,0.12)" : "none" }}
                 >
                   <option value="">All Types</option>
-                  {["Apartment", "Villa", "Penthouse", "Studio", "Office", "Townhouse"].map((o) => (
+                  {availableTypes.map((o) => (
                     <option key={o} value={o}>{o}</option>
                   ))}
                 </select>
               </div>
 
-              {/* ── LOCATION ── */}
+              {/* ── COMMUNITIES ── */}
               <div className="form-group mb-4">
-                <label style={labelStyle}>LOCATION</label>
+                <label style={labelStyle}>COMMUNITIES</label>
                 <select
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   style={{ ...selectStyle, borderColor: location ? "#caab4d" : "#e5e5e5", boxShadow: location ? "0 0 0 3px rgba(202,171,77,0.12)" : "none" }}
                 >
-                  <option value="">All Cities</option>
-                  {["Downtown Dubai", "Dubai Marina", "Palm Jumeirah", "Business Bay", "Jumeirah Beach Residence", "Arabian Ranches", "DIFC", "Dubai Creek Harbour", "Emirates Hills", "JVC", "Dubai Hills Estate"].map((o) => (
+                  <option value="">All Communities</option>
+                  {availableCommunities.map((o) => (
                     <option key={o} value={o}>{o}</option>
                   ))}
                 </select>
@@ -439,23 +468,126 @@ export default function PropertiesClient() {
             </div>
           )}
 
-          {results.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "80px 0", background: "#fff", borderRadius: "12px", border: "1px solid #eee" }}>
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>🏚️</div>
-              <h5 style={{ fontWeight: 700, color: "#1a1a2e" }}>No properties found</h5>
-              <p style={{ color: "#888" }}>Try adjusting your filters to see more results.</p>
-              <button onClick={clearAll} style={{ marginTop: "12px", padding: "10px 28px", background: "#caab4d", color: "#fff", border: "none", borderRadius: "8px", fontWeight: 600, cursor: "pointer" }}>
+          {loading ? (
+            <div className="row justify-content-center g-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+                <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12" key={i}>
+                  <div className="property-listing card rounded-3 border-0 shimmer-card" style={{ height: '420px', overflow: 'hidden', background: '#fff' }}>
+                    <div className="shimmer-img" style={{ height: '240px', background: '#f6f7f8', backgroundImage: 'linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%)', backgroundRepeat: 'no-repeat', backgroundSize: '800px 104px', animation: 'shimmer 1.5s infinite linear forwards' }} />
+                    <div className="p-4">
+                      <div style={{ height: '12px', width: '30%', background: '#f6f7f8', marginBottom: '15px', borderRadius: '4px' }} />
+                      <div style={{ height: '20px', width: '80%', background: '#f6f7f8', marginBottom: '10px', borderRadius: '4px' }} />
+                      <div style={{ height: '14px', width: '50%', background: '#f6f7f8', borderRadius: '4px' }} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <style>{`
+                @keyframes shimmer {
+                  0% { background-position: -468px 0; }
+                  100% { background-position: 468px 0; }
+                }
+              `}</style>
+            </div>
+          ) : results.length === 0 ? (
+            <div className="text-center py-5">
+              <div className="mb-4" style={{ opacity: 0.2 }}>
+                <i className="fa-solid fa-house-circle-xmark" style={{ fontSize: '100px', color: '#1a1a2e' }}></i>
+              </div>
+              <h3 className="fw-bold" style={{ color: "#1a1a2e" }}>No Properties Found</h3>
+              <p className="text-muted">We couldn't find any properties matching your current filters.</p>
+              <button
+                onClick={clearAll}
+                className="btn mt-3"
+                style={{ background: "#caab4d", color: "#fff", fontWeight: 600, padding: "10px 25px" }}
+              >
                 Clear Filters
               </button>
             </div>
           ) : (
-            <div className="row justify-content-center g-4">
-              {results.map((property) => (
-                <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12" key={property.id}>
-                  <GridProperty item={property} border={false} />
+            <>
+              <div className="row justify-content-center g-4">
+                {results.map((property) => (
+                  <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12" key={property.id}>
+                    <GridProperty item={property} border={false} />
+                  </div>
+                ))}
+              </div>
+
+              {/* ── Pagination ── */}
+              {totalPages > 1 && (
+                <div className="row mt-5">
+                  <div className="col-lg-12 col-md-12 col-sm-12 text-center">
+                    <div className="pagination-wrapper d-inline-flex align-items-center gap-2 p-2 bg-white rounded-pill shadow-sm">
+                      <button
+                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        disabled={currentPage === 1}
+                        className="btn btn-circle"
+                        style={{
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          border: '1px solid #eee',
+                          background: currentPage === 1 ? '#f9f9f9' : '#fff',
+                          color: '#1a1a2e',
+                          cursor: currentPage === 1 ? 'default' : 'pointer'
+                        }}
+                      >
+                        <i className="fa-solid fa-chevron-left fs-xs"></i>
+                      </button>
+
+                      <div className="d-flex gap-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                          <button
+                            key={page}
+                            onClick={() => setCurrentPage(page)}
+                            className={`btn ${currentPage === page ? 'active' : ''}`}
+                            style={{
+                              width: '40px',
+                              height: '40px',
+                              borderRadius: '50%',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              background: currentPage === page ? '#caab4d' : 'transparent',
+                              color: currentPage === page ? '#fff' : '#1a1a2e',
+                              border: 'none'
+                            }}
+                          >
+                            {page}
+                          </button>
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                        disabled={currentPage === totalPages}
+                        className="btn btn-circle"
+                        style={{
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          border: '1px solid #eee',
+                          background: currentPage === totalPages ? '#f9f9f9' : '#fff',
+                          color: '#1a1a2e',
+                          cursor: currentPage === totalPages ? 'default' : 'pointer'
+                        }}
+                      >
+                        <i className="fa-solid fa-chevron-right fs-xs"></i>
+                      </button>
+                    </div>
+                    <div className="mt-3 text-muted fs-sm fw-medium">
+                      Showing {((currentPage - 1) * 9) + 1} - {Math.min(currentPage * 9, totalCount)} of {totalCount} Properties
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
       </div>
