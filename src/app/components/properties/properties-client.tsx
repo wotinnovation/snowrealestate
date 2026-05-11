@@ -15,13 +15,13 @@ function normalizeStatus(raw: string | null): string {
 
 type SortKey = "default" | "price-desc" | "price-asc" | "newest" | "oldest";
 
-export default function PropertiesClient() {
+export default function PropertiesClient({ initialLocation }: { initialLocation?: string }) {
   const searchParams = useSearchParams();
 
   // ── Filter States — initialised from URL params ──
   const [activeTab, setActiveTab] = useState(normalizeStatus(searchParams.get("status")));
   const [lookingFor, setLookingFor] = useState(searchParams.get("type") || "");
-  const [location, setLocation] = useState(searchParams.get("location") || "");
+  const [location, setLocation] = useState(initialLocation || searchParams.get("location") || "");
   const [bedrooms, setBedrooms] = useState(searchParams.get("bedrooms") || "");
   const [budget, setBudget] = useState(searchParams.get("budget") || "");
   const [sortKey, setSortKey] = useState<SortKey>("default");

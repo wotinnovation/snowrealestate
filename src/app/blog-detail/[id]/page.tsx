@@ -1,6 +1,19 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { blogData } from '../../data/data'
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const data = blogData.find((item: any) => item.id === parseInt(params.id));
+  
+  return {
+    title: data?.title ? `${data.title} | Snow Real Estate Blog` : 'Blog | Snow Real Estate',
+    description: data?.desc || 'Read our latest insights and news about Dubai real estate.',
+    openGraph: {
+      images: data?.image ? [{ url: data.image }] : [],
+    },
+  };
+}
 
 import FooterTop from '../../components/footer-top'
 import Footer from '../../components/footer'

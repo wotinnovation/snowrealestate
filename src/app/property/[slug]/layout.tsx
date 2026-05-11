@@ -1,7 +1,7 @@
 import { getPropertyBySlug } from '../../lib/api';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const property = await getPropertyBySlug(slug);
   
   if (!property) {

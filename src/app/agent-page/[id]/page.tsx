@@ -1,6 +1,19 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { agentData } from '../../data/data'
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const data = agentData.find((item: any) => item.id === parseInt(params.id));
+  
+  return {
+    title: data?.name ? `${data.name} | Professional Real Estate Agent | Snow Real Estate` : 'Agent Detail | Snow Real Estate',
+    description: `Meet ${data?.name || 'our expert agent'}, a professional real estate consultant at Snow Real Estate, specializing in luxury properties in Dubai.`,
+    openGraph: {
+      images: data?.image ? [{ url: data.image }] : [],
+    },
+  };
+}
 
 import Navbar from '../../components/navbar/navbar'
 import Footer from '../../components/footer'

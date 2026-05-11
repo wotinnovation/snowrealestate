@@ -267,3 +267,26 @@ export async function getPageBySlug(slug: string): Promise<ApiPage | null> {
   `, { slug });
   return data.page;
 }
+
+export interface ApiCommunity {
+  id: string;
+  name: string;
+  slug: string;
+  image: string;
+  propertyCount: number;
+}
+
+export async function getCommunities(): Promise<ApiCommunity[]> {
+  const data = await gqlFetch<{ communities: ApiCommunity[] }>(`
+    query GetCommunities {
+      communities(status: "active") {
+        id
+        name
+        slug
+        image
+        propertyCount
+      }
+    }
+  `);
+  return data.communities;
+}
