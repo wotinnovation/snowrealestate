@@ -3,8 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { blogData } from '../../data/data'
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const data = blogData.find((item: any) => item.id === parseInt(params.id));
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = blogData.find((item: any) => item.id === parseInt(id));
   
   return {
     title: data?.title ? `${data.title} | Snow Real Estate Blog` : 'Blog | Snow Real Estate',
@@ -21,10 +22,9 @@ import BlogSidebar from '../../components/blog-sidebar'
 import Navbar from '../../components/navbar/navbar'
 import ScrollToTop from '../../components/scroll-to-top'
 
-import { blogData } from '../../data/data'
-
-export default function Page({ params }: { params: { id: string } } ) {
-    const data = blogData.find((item:any)=>item.id === parseInt(params.id))   
+export default async function Page({ params }: { params: Promise<{ id: string }> } ) {
+    const { id } = await params;
+    const data = blogData.find((item:any)=>item.id === parseInt(id))
   return (
     <div className='blog-page'>
         <Navbar transparent={false}/>   

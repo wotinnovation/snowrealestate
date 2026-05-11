@@ -3,8 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { agentData } from '../../data/data'
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const data = agentData.find((item: any) => item.id === parseInt(params.id));
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = agentData.find((item: any) => item.id === parseInt(id));
   
   return {
     title: data?.name ? `${data.name} | Professional Real Estate Agent | Snow Real Estate` : 'Agent Detail | Snow Real Estate',
@@ -22,10 +23,11 @@ import DetailSidebarThree from '../../components/property/detail-sidebar-three'
 import PropertyTab from '../../components/property/property-tab'
 import ScrollToTop from '../../components/scroll-to-top'
 
-import { agentData, agentInfo } from '../../data/data'
+import { agentInfo } from '../../data/data'
 
-export default function Page({params}:{params:any}) {
-    let data = agentData.find((item:any)=>item.id === parseInt(params.id))
+export default async function Page({params}:{params:Promise<{id:string}>}) {
+    const { id } = await params;
+    let data = agentData.find((item:any)=>item.id === parseInt(id))
   return (
     <>
         <Navbar transparent={false}/>   

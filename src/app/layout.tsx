@@ -12,6 +12,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://snowrealestate.com'),
   title: "Snow Real Estate | Luxury Properties & Investment in Dubai",
   description: "Snow Real Estate is a premier luxury brokerage in Dubai, specializing in exclusive properties, prime locations, and high-yield investments. Discover your dream home today.",
   keywords: "Dubai Real Estate, Luxury Properties Dubai, Snow Real Estate, Dubai Marina, Palm Jumeirah, Downtown Dubai, Real Estate Brokerage Dubai",
