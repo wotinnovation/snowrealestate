@@ -1,4 +1,4 @@
-import { getPageBySlug } from '../../lib/api';
+import { getPageBySlug } from '../lib/api';
 
 export async function generateMetadata() {
   const pageData = await getPageBySlug('submit-property');
